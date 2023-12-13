@@ -5,9 +5,9 @@
 const express = require ('express')
 const colors = require('colors')
 const dotenv = require ('dotenv').config()
-const port = process.env.PORT || 5000
-const connectDB = require('./config/db')
-const { errorHandler } = require('./middleware/errorMiddleware')
+const port = process.env.PORT || 5003
+const connectDB = require ('./backend/config/db')
+const { errorHandler } = require('./backend/middleware/errorMiddleware')
 
 connectDB()
 
@@ -17,8 +17,8 @@ app.use(express.json()) //para recibir info por un formulario en body
 app.use(express.urlencoded({extended: false}))
 
 
-app.use('/api/tareas', require('./routes/tareasRoutes'))
-app.use('/api/users', require('./routes/usersRoutes'))
+app.use('/api/products', require('./backend/routes/productsRoutes'))
+app.use('/api/users', require('./backend/routes/usersRoutes'))
 
 app.use(errorHandler)
 
