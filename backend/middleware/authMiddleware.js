@@ -23,14 +23,14 @@ const protect = asyncHandler( async (req, res, next) => {
         } catch (error) {
             console.log(error)
             res.status(401)
-            throw Error ('Acceso no autorizado')
+            throw Error ('authMiddelware: Access not authorized')
         }
 
     }
 
     if (!token){
         res.status(401)
-            throw Error ('Acceso no autorizado, no token provided')
+            throw Error ('authMiddleware: No JWT token provided, access not authorized')
     }
 
 })
