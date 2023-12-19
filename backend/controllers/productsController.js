@@ -24,6 +24,20 @@ const setProducts = asyncHandler(async (req, res) => {
     res.status(201).json({ product })
 })
 
+// Get all products ADMIN
+const getProductsAdmin = asyncHandler( async (req, res) => {
+      // verficar que product pertenezca al usuario del token que la quiere modificar
+
+    if (!req.user.esAdmin){
+        res.status(401)
+        throw new Error ('Product_Controller|getProductsAdmin: Not ADMIN User, Access to all products not authorized')
+    } else {
+        const products = await Product.find({})
+        res.status(200).json(products)
+    }
+
+})
+
 
 //router.get('/:id', protect, getOneProduct)
 const getOneProduct = asyncHandler(async (req, res) => {
@@ -96,6 +110,7 @@ const deleteProducts = asyncHandler(async (req, res) => {
 
 module.exports = {
     getProducts,
+    getProductsAdmin,
     setProducts,
     getOneProduct,
     updateProducts,
