@@ -27,7 +27,6 @@ const setProducts = asyncHandler(async (req, res) => {
 // Get all products ADMIN
 const getProductsAdmin = asyncHandler( async (req, res) => {
       // verficar que product pertenezca al usuario del token que la quiere modificar
-
     if (!req.user.esAdmin){
         res.status(401)
         throw new Error ('Product_Controller|getProductsAdmin: Not ADMIN User, Access to all products not authorized')
