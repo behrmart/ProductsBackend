@@ -7,3 +7,6 @@
 // Node.js Express MongoDB Mongoose JWT bcrypt
 
 // Deployed in Cyclic
+
+api deployed at:
+https://good-rose-giraffe-sari.cyclic.app
