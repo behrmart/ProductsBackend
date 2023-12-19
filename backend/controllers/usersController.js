@@ -3,12 +3,14 @@ const bcrypt = require('bcryptjs')
 const asyncHandler = require('express-async-handler')
 const User = require('../model/userModel')
 
-const registrarUser = asyncHandler( async (req, res) => {
+//++++++++++++++++++++++++ Create User ++++++++++++++++++++++++++++++++++
+
+const createUser = asyncHandler( async (req, res) => {
     const {name, email, password} = req.body
 
     if (!name || !email || !password){
         res.status(400)
-        throw new Error ('Faltan datos de usuario, verificar')
+        throw new Error ('usersController: Missing user data (name,email,password)')
     }
 
     // Verificar si ese usuario existe
@@ -16,7 +18,7 @@ const registrarUser = asyncHandler( async (req, res) => {
     const userExiste = await User.findOne({ email })
     if (userExiste){
         res.status(400)
-        throw new Error ('Usuario ya existe en DB')
+        throw new Error ('usersController: User already exist on DB')
     }
 
     // Hash al password
@@ -40,11 +42,13 @@ const registrarUser = asyncHandler( async (req, res) => {
         })
     } else{
         res.status(400)
-        throw new Error('No se pudo guardar usuario')
+        throw new Error('usersController: Could not create user')
     }
 
 })
 
+
+//++++++++++++++++++++++++ Login User ++++++++++++++++++++++++++++++++++
 
 const loginUser = asyncHandler( async (req, res) => {
     //desestructurar al body
@@ -62,24 +66,45 @@ const loginUser = asyncHandler( async (req, res) => {
             token: generarToken(user.id)})
     } else {
         res.status(400)
-        throw Error ('Credenciales incorrectas')
+        throw Error ('usersController: Invalid credentials')
     }
 
 })
 
-const misDatos = asyncHandler( async (req, res) => {
+
+//++++++++++++++++++++++++ User Data ++++++++++++++++++++++++++++++++++
+
+const userData = asyncHandler( async (req, res) => {
     res.status(200).json(req.user)
 })
 
 
-//Funcion para generar un JWT jason web token
+//+++++++++++++++++++++++ Update User +++++++++++++++++++++++++++++++++ BFMM ---- Pending, user validation not working yet
+
+const updateUser = asyncHandler( async (req,res) => {
+
+ const user = req.user
+
+//verificamos usuario 
+if (user){
+    const userUpdated = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+    res.status(200).json({userUpdated})
+} else {
+    res.status(400)
+    throw Error ('usersController: User not auth')
+}
+}
+)
+
+// ++++++++++++++++++++++++ Funcion para generar un JWT jason web token
 const generarToken = (id) => {
     return jwt.sign({id}, process.env.JWT_SECRET, 
         {expiresIn: '30d' }) // JWT expira en 30 dias
 }
 
 module.exports = {
-    registrarUser,
+    createUser,
     loginUser,
-    misDatos
+    userData,
+    updateUser
 }
