@@ -6,7 +6,7 @@ const pedidoSchema = mongoose.Schema({
         required: true,
         ref: 'User'
     },
-    pedido_detail: {
+    pedido_detail: { // Needs validating products on the DB TBD
         type: Array,
         required: [true, "Type Pedido Detail"]
     },

@@ -4,12 +4,12 @@ const asyncHandler = require('express-async-handler')
 const Pedido = require ('../model/pedidosModel')
 
 const getPedidos = asyncHandler( async (req, res) => {
-    const pedidos = await Product.find({product_user: req.user.id})
+    const pedidos = await Pedido.find({pedido_user: req.user.id})
     res.status(200).json(pedidos)
 })
 
 const setPedidos = asyncHandler(async (req, res) => {
-    console.log(req.body)
+   
     if (!req.body.pedido_detail){
         res.status(400)
         throw new Error("Pedidos_Controller|setPedidos: Please type pedidos detail")

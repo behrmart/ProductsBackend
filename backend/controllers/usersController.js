@@ -6,7 +6,7 @@ const User = require('../model/userModel')
 //++++++++++++++++++++++++ Create User ++++++++++++++++++++++++++++++++++
 
 const createUser = asyncHandler( async (req, res) => {
-    const {name, email, password} = req.body
+    const {name, email, password, esAdmin} = req.body
 
     if (!name || !email || !password){
         res.status(400)
@@ -30,7 +30,8 @@ const createUser = asyncHandler( async (req, res) => {
     const user = await User.create({
         name,
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        esAdmin
     })
 
     if(user){
