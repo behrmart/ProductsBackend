@@ -9,4 +9,4 @@
 // Deployed in Cyclic
 
 api deployed at:
-https://good-rose-giraffe-sari.cyclic.app
+https://erin-thoughtful-millipede.cyclic.app
